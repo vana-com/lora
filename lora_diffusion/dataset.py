@@ -291,13 +291,15 @@ class PivotalTuningDatasetCapation(Dataset):
         self.h_flip = h_flip
         self.image_transforms = transforms.Compose(
             [
+                transforms.ColorJitter(0.1, 0.1)
+                if color_jitter
+                else transforms.Lambda(lambda x: x),
+                transforms.RandomPerspective(distortion_scale=0.3, p=1.0),
+                transforms.RandomAffine(25, scale=(0.75, 1.25)),
                 transforms.Resize(
                     size, interpolation=transforms.InterpolationMode.BILINEAR
                 )
                 if resize
-                else transforms.Lambda(lambda x: x),
-                transforms.ColorJitter(0.1, 0.1)
-                if color_jitter
                 else transforms.Lambda(lambda x: x),
                 transforms.CenterCrop(size),
                 transforms.ToTensor(),
