@@ -866,6 +866,7 @@ def train(
         use_template=use_template,
         tokenizer=tokenizer,
         size=resolution,
+        h_flip=False,
         color_jitter=color_jitter,
         use_face_segmentation_condition=use_face_segmentation_condition,
         use_mask_captioned_data=use_mask_captioned_data,
