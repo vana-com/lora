@@ -295,7 +295,7 @@ class PivotalTuningDatasetCapation(Dataset):
                 if color_jitter
                 else transforms.Lambda(lambda x: x),
                 # transforms.RandomPerspective(distortion_scale=0.3, p=1.0), # warped face more
-                transforms.RandomAffine(25, scale=(0.75, 1.25)),
+                transforms.RandomAffine(9, scale=(0.75, 1.25), interpolation=transforms.InterpolationMode.BILINEAR),
                 transforms.Resize(
                     size, interpolation=transforms.InterpolationMode.BILINEAR
                 )
