@@ -726,7 +726,7 @@ def train(
     placeholder_tokens: str = "",
     placeholder_token_at_data: Optional[str] = None,
     initializer_tokens: Optional[str] = None,
-    seed: int = 42,
+    seed: int = 1,
     resolution: int = 512,
     color_jitter: bool = True,
     train_batch_size: int = 1,
@@ -775,7 +775,7 @@ def train(
 ):
     torch.manual_seed(seed)
     np.random.seed(seed)
-    random.seed(seed) 
+    random.seed(seed)
 
     if log_wandb:
         wandb.init(
