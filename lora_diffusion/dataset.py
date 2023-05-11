@@ -8,6 +8,7 @@ from torch.utils.data import Dataset
 from torchvision import transforms
 import glob
 from .preprocess_files import face_mask_google_mediapipe
+import torch
 
 OBJECT_TEMPLATE = [
     "a photo of a {}",
@@ -206,6 +207,10 @@ class PivotalTuningDatasetCapation(Dataset):
             use_mask_captioned_data and use_template
         ), "Can't use both mask caption data and template."
 
+        # fixes the seeds for the transformations as to be deterministic
+        random.seed(1) 
+        torch.manual_seed(1)
+
         # Prepare the instance images
         if use_mask_captioned_data:
             src_imgs = glob.glob(str(instance_data_root) + "/*src.jpg")
@@ -311,6 +316,9 @@ class PivotalTuningDatasetCapation(Dataset):
         return self._length
 
     def __getitem__(self, index):
+        # fixes the seeds for the transformations as to be deterministic
+        random.seed(1) 
+        torch.manual_seed(1)
         example = {}
         instance_image = Image.open(
             self.instance_images_path[index % self.num_instance_images]
