@@ -11,6 +11,7 @@ import random
 import re
 from pathlib import Path
 from typing import Optional, List, Literal
+import numpy as np
 
 import torch
 import torch.nn.functional as F
@@ -773,6 +774,8 @@ def train(
     custom_prompts: List[str] = None,
 ):
     torch.manual_seed(seed)
+    np.random.seed(seed)
+    random.seed(seed) 
 
     if log_wandb:
         wandb.init(
