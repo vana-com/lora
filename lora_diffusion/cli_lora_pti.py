@@ -192,7 +192,6 @@ def text2img_dataloader(
             batch_size=train_batch_size,
             shuffle=True,
             collate_fn=collate_fn,
-            pin_memory=True,
             worker_init_fn=seed_worker,
         )
 
@@ -204,7 +203,6 @@ def text2img_dataloader(
             batch_size=train_batch_size,
             shuffle=True,
             collate_fn=collate_fn,
-            pin_memory=True,
             worker_init_fn=seed_worker,
         )
 
@@ -271,7 +269,6 @@ def inpainting_dataloader(
         batch_size=train_batch_size,
         shuffle=True,
         collate_fn=collate_fn,
-        pin_memory=True,
         worker_init_fn=seed_worker,
     )
 
