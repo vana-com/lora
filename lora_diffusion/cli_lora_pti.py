@@ -11,6 +11,7 @@ import random
 import re
 from pathlib import Path
 from typing import Optional, List, Literal
+import numpy as np
 
 import torch
 import torch.nn.functional as F
@@ -130,6 +131,12 @@ def get_models(
     )
 
 
+def seed_worker(worker_id):
+    worker_seed = torch.initial_seed() % 2**32
+    np.random.seed(worker_seed)
+    random.seed(worker_seed)
+
+
 @torch.no_grad()
 def text2img_dataloader(
     train_dataset,
@@ -185,6 +192,7 @@ def text2img_dataloader(
             batch_size=train_batch_size,
             shuffle=True,
             collate_fn=collate_fn,
+            worker_init_fn=seed_worker,
         )
 
         print("PTI : Using cached latent.")
@@ -195,6 +203,7 @@ def text2img_dataloader(
             batch_size=train_batch_size,
             shuffle=True,
             collate_fn=collate_fn,
+            worker_init_fn=seed_worker,
         )
 
     return train_dataloader
@@ -260,6 +269,7 @@ def inpainting_dataloader(
         batch_size=train_batch_size,
         shuffle=True,
         collate_fn=collate_fn,
+        worker_init_fn=seed_worker,
     )
 
     return train_dataloader
@@ -725,7 +735,7 @@ def train(
     placeholder_tokens: str = "",
     placeholder_token_at_data: Optional[str] = None,
     initializer_tokens: Optional[str] = None,
-    seed: int = 42,
+    seed: int = 1,
     resolution: int = 512,
     color_jitter: bool = True,
     train_batch_size: int = 1,
@@ -773,6 +783,8 @@ def train(
     custom_prompts: List[str] = None,
 ):
     torch.manual_seed(seed)
+    np.random.seed(seed)
+    random.seed(seed)
 
     if log_wandb:
         wandb.init(

@@ -8,6 +8,12 @@ from torch.utils.data import Dataset
 from torchvision import transforms
 import glob
 from .preprocess_files import face_mask_google_mediapipe
+import torch
+import numpy as np
+
+torch.manual_seed(1)
+np.random.seed(1)
+random.seed(1) # random.randint needs to have its seed set
 
 OBJECT_TEMPLATE = [
     "a photo of a {}",
@@ -205,6 +211,7 @@ class PivotalTuningDatasetCapation(Dataset):
         assert not (
             use_mask_captioned_data and use_template
         ), "Can't use both mask caption data and template."
+
 
         # Prepare the instance images
         if use_mask_captioned_data:
