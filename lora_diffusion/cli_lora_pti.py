@@ -781,6 +781,7 @@ def train(
     mixed_precision_ti: bool = True,
     mixed_precision_tune: bool = False,
     custom_prompts: List[str] = None,
+    resize: bool = True,
 ):
     torch.manual_seed(seed)
     np.random.seed(seed)
@@ -883,6 +884,7 @@ def train(
         use_mask_captioned_data=use_mask_captioned_data,
         train_inpainting=train_inpainting,
         custom_prompts=custom_prompts,
+        resize=resize,
     )
 
     train_dataset.blur_amount = 200
