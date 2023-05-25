@@ -11,10 +11,6 @@ from .preprocess_files import face_mask_google_mediapipe
 import torch
 import numpy as np
 
-torch.manual_seed(1)
-np.random.seed(1)
-random.seed(1) # random.randint needs to have its seed set
-
 OBJECT_TEMPLATE = [
     "a photo of a {}",
     "a rendering of a {}",
